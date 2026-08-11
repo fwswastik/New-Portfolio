@@ -348,7 +348,7 @@
         .barber-section {
             border: 4px solid var(--border);
             padding: 50px;
-            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('barbershop.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('barber_bg.jpg') center/cover no-repeat;
             box-shadow: 12px 12px 0px var(--red);
             margin-bottom: 80px;
             position: relative;
@@ -649,7 +649,7 @@
         </div>
 
         <div class="hero-img-wrapper">
-            <img src="swastik_photo.jpg" alt="Swastik Mishra" class="hero-img">
+            <img src="20251126_172820.jpg" alt="Swastik Mishra" class="hero-img">
         </div>
     </section>
 
@@ -698,34 +698,9 @@
                 </div>
             </div>
 
-            <div class="player-area">
-                <div class="player-deck">
-                    <div class="vinyl-container">
-                        <div class="vinyl" id="vinylDisc">
-                            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80" alt="Art" class="vinyl-art" id="currentTrackArt">
-                        </div>
-                    </div>
-                    
-                    <div class="track-info">
-                        <h4 id="currentTrackTitle">Loading Track...</h4>
-                        <p id="currentTrackSinger">Please wait</p>
-                    </div>
-
-                    <div class="controls">
-                        <button class="ctrl-btn" id="prevTrackBtn"><i class="fa-solid fa-backward-step"></i></button>
-                        <button class="ctrl-btn play" id="playPauseBtn"><i class="fa-solid fa-play"></i></button>
-                        <button class="ctrl-btn" id="nextTrackBtn"><i class="fa-solid fa-forward-step"></i></button>
-                    </div>
-
-                    <canvas id="visualizerCanvas"></canvas>
-                </div>
-
-                <div class="playlist-box">
-                    <div class="playlist-header">TRACKLIST_DATABASE.DB</div>
-                    <div class="playlist-items" id="playlistContainer">
-                        <!-- JS renders playlist here -->
-                    </div>
-                </div>
+            <div class="player-area" style="display: block;">
+                <!-- Spotify Embed for 90s Bollywood Nostalgia -->
+                <iframe style="border-radius:0; border: 4px solid var(--border); box-shadow: 12px 12px 0px var(--blue);" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYV7OOaGhoH0?utm_source=generator&theme=0" width="100%" height="450" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </section>
@@ -1117,69 +1092,7 @@
         function startTypingEffect() { charIndex = 0; isDeleting = false; }
         typeLoop();
 
-        // Audio System (Barber Shop)
-        const playlist = [
-            { title: "Ghar Se Nikalte Hi", singer: "Udit Narayan", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "90s Hit" },
-            { title: "Ek Ladki Ko Dekha Toh", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "Retro" },
-            { title: "Kaho Naa Pyaar Hai", singer: "Udit Narayan & Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Superhit" },
-            { title: "Pardesi Pardesi", singer: "Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "Classic" },
-            { title: "Tunak Tunak Tun", singer: "Daler Mehndi", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Bhangra" },
-            { title: "Tujhe Dekha Toh", singer: "Kumar Sanu, Lata M.", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "Evergreen" },
-            { title: "Main Koi Aisa Geet Gaoon", singer: "Abhijeet Bhattacharya", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "Melody" },
-            { title: "Mera Dil Bhi Kitna Pagal", singer: "Kumar Sanu, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Romantic" },
-            { title: "Dheere Dheere Se", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "Aashiqui" },
-            { title: "Yeh Kaali Kaali Aankhen", singer: "Kumar Sanu, Anu Malik", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Dance" },
-            { title: "Tum Paas Aaye", singer: "Udit Narayan, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "KKHH" },
-            { title: "Bolo Ta Ra Ra", singer: "Daler Mehndi", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Bhangra" },
-            { title: "Chura Ke Dil Mera", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "90s Hit" },
-            { title: "Aashiq Banaya Aapne", singer: "Himesh Reshammiya", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "2000s" },
-            { title: "Tip Tip Barsa Paani", singer: "Udit Narayan, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Monsoon" }
-        ];
-        
-        let trackIdx = 0;
-        let isPlaying = false;
-        const audio = new Audio();
-        audio.crossOrigin = "anonymous";
-        
-        const vinyl = document.getElementById('vinylDisc');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const playlistContainer = document.getElementById('playlistContainer');
-        
-        function renderPlaylist() {
-            playlistContainer.innerHTML = '';
-            playlist.forEach((song, idx) => {
-                const row = document.createElement('div');
-                row.className = `song-row ${idx === trackIdx ? 'active' : ''}`;
-                row.innerHTML = `<div><h5>${song.title}</h5><p>${song.singer}</p></div><span class="song-tag">${song.tag}</span>`;
-                row.onclick = () => { loadTrack(idx); playAudio(); };
-                playlistContainer.appendChild(row);
-            });
-        }
-        
-        function loadTrack(idx) {
-            trackIdx = idx;
-            audio.src = playlist[idx].url;
-            document.getElementById('currentTrackArt').src = playlist[idx].art;
-            document.getElementById('currentTrackTitle').textContent = playlist[idx].title;
-            document.getElementById('currentTrackSinger').textContent = playlist[idx].singer;
-            renderPlaylist();
-        }
-        
-        function playAudio() {
-            audio.play().then(() => {
-                isPlaying = true;
-                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-                vinyl.classList.add('playing');
-                startVisualizer();
-            }).catch(() => { synthFallback(); });
-        }
-        
-        playPauseBtn.onclick = () => { if(isPlaying){ audio.pause(); isPlaying=false; playPauseBtn.innerHTML='<i class="fa-solid fa-play"></i>'; vinyl.classList.remove('playing'); } else playAudio(); };
-        document.getElementById('prevTrackBtn').onclick = () => { trackIdx = (trackIdx - 1 + playlist.length) % playlist.length; loadTrack(trackIdx); playAudio(); };
-        document.getElementById('nextTrackBtn').onclick = () => { trackIdx = (trackIdx + 1) % playlist.length; loadTrack(trackIdx); playAudio(); };
-        audio.onended = document.getElementById('nextTrackBtn').onclick;
-        
-        loadTrack(0);
+        // Music is now handled purely by the embedded Spotify Iframe player!
         
         // Audio Synth ASMR
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1216,33 +1129,7 @@
             osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 1.2);
         };
         
-        function synthFallback() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            isPlaying = true; playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'; vinyl.classList.add('playing');
-            startVisualizer();
-        }
-
-        // Canvas Visualizer
-        const canvas = document.getElementById('visualizerCanvas');
-        const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = 80; }
-        resizeCanvas(); window.addEventListener('resize', resizeCanvas);
-        
-        let animFrame;
-        function startVisualizer() {
-            cancelAnimationFrame(animFrame);
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const numBars = 30; const barW = (canvas.width / numBars) - 2;
-                for (let i = 0; i < numBars; i++) {
-                    const barH = isPlaying ? Math.random() * 70 + 5 : 5;
-                    ctx.fillStyle = '#ff3b30';
-                    ctx.fillRect(i * (barW + 2), canvas.height - barH, barW, barH);
-                }
-                if(isPlaying) animFrame = requestAnimationFrame(draw);
-            }
-            draw();
-        }
+        // Legacy synth and visualizer removed in favor of Spotify Embed UI
 
         // C Terminal Simulator
         const snippets = {
