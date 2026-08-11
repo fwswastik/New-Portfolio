@@ -519,6 +519,10 @@
             white-space: pre;
             font-size: 0.85rem;
             margin-bottom: 20px;
+            width: 100%;
+            outline: none;
+            font-family: 'Space Mono', monospace;
+            resize: vertical;
         }
         .output-display {
             background: #0a0a0a;
@@ -642,7 +646,7 @@
         </div>
 
         <div class="hero-img-wrapper">
-            <img src="20251126_172820.jpg" alt="Swastik Mishra" class="hero-img">
+            <img src="swastik_photo.jpg" alt="Swastik Mishra" class="hero-img">
         </div>
     </section>
 
@@ -802,7 +806,7 @@
                         <option value="ifelse">nested_logic.c</option>
                         <option value="pattern">star_pattern.c</option>
                     </select>
-                    <div class="code-display" id="codePreviewText"></div>
+                    <textarea class="code-display" id="codePreviewText" spellcheck="false"></textarea>
                     <button class="retro-btn blue" id="runCodeBtn" data-i18n="term_run_btn">COMPILE & RUN</button>
                 </div>
                 <div class="output-display" id="terminalStdout">
@@ -1072,9 +1076,21 @@
 
         // Audio System (Barber Shop)
         const playlist = [
-            { title: "Retro Haircut Mix", singer: "Vintage Salon FM", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "90s Hit" },
-            { title: "FM 98.3 Nostalgia", singer: "Chill Barber Beats", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "Retro" },
-            { title: "Lucknow Salon Vibe", singer: "Lo-Fi Indian Synth", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Chill" }
+            { title: "Ghar Se Nikalte Hi", singer: "Udit Narayan", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "90s Hit" },
+            { title: "Ek Ladki Ko Dekha Toh", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "Retro" },
+            { title: "Kaho Naa Pyaar Hai", singer: "Udit Narayan & Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Superhit" },
+            { title: "Pardesi Pardesi", singer: "Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "Classic" },
+            { title: "Tunak Tunak Tun", singer: "Daler Mehndi", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Bhangra" },
+            { title: "Tujhe Dekha Toh", singer: "Kumar Sanu, Lata M.", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "Evergreen" },
+            { title: "Main Koi Aisa Geet Gaoon", singer: "Abhijeet Bhattacharya", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "Melody" },
+            { title: "Mera Dil Bhi Kitna Pagal", singer: "Kumar Sanu, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Romantic" },
+            { title: "Dheere Dheere Se", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "Aashiqui" },
+            { title: "Yeh Kaali Kaali Aankhen", singer: "Kumar Sanu, Anu Malik", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Dance" },
+            { title: "Tum Paas Aaye", singer: "Udit Narayan, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3", art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80", tag: "KKHH" },
+            { title: "Bolo Ta Ra Ra", singer: "Daler Mehndi", url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3", art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80", tag: "Bhangra" },
+            { title: "Chura Ke Dil Mera", singer: "Kumar Sanu", url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3", art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80", tag: "90s Hit" },
+            { title: "Aashiq Banaya Aapne", singer: "Himesh Reshammiya", url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3", art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80", tag: "2000s" },
+            { title: "Tip Tip Barsa Paani", singer: "Udit Narayan, Alka Yagnik", url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3", art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80", tag: "Monsoon" }
         ];
         
         let trackIdx = 0;
@@ -1187,21 +1203,35 @@
 
         // C Terminal Simulator
         const snippets = {
-            avg: { code: `#include <stdio.h>\nint main() {\n    float num[] = {85.5, 90.0, 78.5};\n    float sum = 0;\n    for(int i=0; i<3; i++) sum += num[i];\n    printf("Avg = %.2f\\n", sum/3);\n    return 0;\n}`, out: `<span class="cmd">$ gcc main.c -o main && ./main</span>\nAvg = 84.67\n<span class="success">Process completed.</span>` },
-            ifelse: { code: `#include <stdio.h>\nint main() {\n    int marks = 92;\n    if(marks >= 90) printf("Grade: A+\\n");\n    else printf("Grade: B\\n");\n    return 0;\n}`, out: `<span class="cmd">$ gcc main.c -o main && ./main</span>\nGrade: A+\n<span class="success">Process completed.</span>` },
-            pattern: { code: `#include <stdio.h>\nint main() {\n    for(int i=1; i<=3; i++) {\n        for(int j=1; j<=i; j++) printf("* ");\n        printf("\\n");\n    }\n    return 0;\n}`, out: `<span class="cmd">$ gcc main.c -o main && ./main</span>\n* \n* * \n* * * \n<span class="success">Process completed.</span>` }
+            avg: { code: `#include <stdio.h>\nint main() {\n    float num[] = {85.5, 90.0, 78.5};\n    float sum = 0;\n    for(int i=0; i<3; i++) sum += num[i];\n    printf("Avg = %.2f\\n", sum/3);\n    return 0;\n}` },
+            ifelse: { code: `#include <stdio.h>\nint main() {\n    int marks = 92;\n    if(marks >= 90) printf("Grade: A+\\n");\n    else printf("Grade: B\\n");\n    return 0;\n}` },
+            pattern: { code: `#include <stdio.h>\nint main() {\n    for(int i=1; i<=3; i++) {\n        for(int j=1; j<=i; j++) printf("* ");\n        printf("\\n");\n    }\n    return 0;\n}` }
         };
         
         const termSelect = document.getElementById('codeSnippetSelect');
         const codePreview = document.getElementById('codePreviewText');
         const termOut = document.getElementById('terminalStdout');
         
-        termSelect.onchange = (e) => { codePreview.textContent = snippets[e.target.value].code; termOut.innerHTML = 'System Ready.'; };
+        termSelect.onchange = (e) => { codePreview.value = snippets[e.target.value].code; termOut.innerHTML = 'System Ready. Edit code above and click Compile & Run.'; };
         termSelect.onchange({target: termSelect});
         
         document.getElementById('runCodeBtn').onclick = () => {
-            termOut.innerHTML = 'Compiling...';
-            setTimeout(() => { termOut.innerHTML = snippets[termSelect.value].out; }, 500);
+            termOut.innerHTML = 'Compiling <span class="cmd">main.c</span>...';
+            setTimeout(() => {
+                let userCode = codePreview.value;
+                let outputStr = '';
+                // Simple regex to simulate C printf output
+                const printfRegex = /printf\s*\(\s*"([^"]*)"/g;
+                let match;
+                let found = false;
+                while ((match = printfRegex.exec(userCode)) !== null) {
+                    outputStr += match[1].replace(/\\n/g, '<br>');
+                    found = true;
+                }
+                if (!found) outputStr = "Program finished with exit code 0.<br>(No output generated)";
+                
+                termOut.innerHTML = `<span class="cmd">$ gcc main.c -o main && ./main</span><br><br>${outputStr}<br><br><span class="success">Process completed.</span>`;
+            }, 600);
         };
 
         // Form Prevent Default
