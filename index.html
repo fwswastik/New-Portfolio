@@ -348,9 +348,10 @@
         .barber-section {
             border: 4px solid var(--border);
             padding: 50px;
-            background: repeating-linear-gradient(45deg, #111, #111 10px, #1a1a1a 10px, #1a1a1a 20px);
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('barber_bg.jpg') center/cover no-repeat;
             box-shadow: 12px 12px 0px var(--red);
             margin-bottom: 80px;
+            position: relative;
         }
         .barber-header {
             display: flex;
@@ -619,6 +620,8 @@
                         <button class="lang-opt" data-lang="es">ES / Español</button>
                         <button class="lang-opt" data-lang="fr">FR / Français</button>
                         <button class="lang-opt" data-lang="ja">JA / 日本語</button>
+                        <button class="lang-opt" data-lang="ko">KO / 한국어</button>
+                        <button class="lang-opt" data-lang="it">IT / Italiano</button>
                     </div>
                 </div>
             </div>
@@ -1019,6 +1022,46 @@
                 term_title: "C_COMPILER_SIMULATOR", term_select_label: "コード選択:", term_run_btn: "実行",
                 cnt_title: "お問い合わせ", cnt_heading: "Comm_Link_Active", cnt_desc: "お仕事の依頼はこちら。",
                 form_name: "名前", form_email: "メール", form_msg: "メッセージ", form_submit: "送信する"
+            },
+            ko: {
+                nav_home: "홈", nav_about: "소개", nav_skills: "기술", nav_projects: "프로젝트",
+                nav_barber: "이발소 💈", nav_terminal: "C-터미널", nav_contact: "연락처",
+                hero_status: "SYSTEM.STATUS: 작업_가능", hero_greeting: "안녕하세요, 저는",
+                hero_desc: "B.Tech CSE 학생. 비디오 편집기 및 웹 개발자.",
+                hero_cta_work: "포트폴리오_실행", hero_cta_barber: "이발소_실행.exe",
+                about_title: "SYSTEM.INFO // BIO", about_heading_bio: "Swastik은 누구인가요?",
+                about_text_1: "PW Institute의 B.Tech CSE 학생.",
+                about_text_2: "6개월 이상의 비디오 편집 및 콘텐츠 제작 경험.",
+                stat_exp: "개월 편집", stat_web: "웹 클론", stat_vibe: "창의력", stat_sim: "시뮬레이션",
+                barber_main_title: "이발소 주크박스 💈", barber_sub_title: "레트로 음악 및 이발 ASMR!",
+                fx_scissor: "✂️ 가위", fx_dryer: "💨 드라이어", fx_massage: "💆‍♂️ 마사지",
+                skills_title: "기술 및 속성", sk_cat_video: "미디어 / 편집", sk_cat_dev: "웹 / 프로그래밍",
+                proj_title: "실행된_프로젝트", proj_desc_netflix: "넷플릭스 클론.",
+                proj_desc_amazon: "아마존 로그인 클론.", drive_title: "비디오 편집 릴",
+                drive_desc: "짧은 비디오 및 프로모션.", drive_btn: "드라이브 열기",
+                term_title: "C_COMPILER_SIMULATOR", term_select_label: "코드 선택:", term_run_btn: "컴파일 및 실행",
+                cnt_title: "연락처_시작", cnt_heading: "Comm_Link_Active", cnt_desc: "작업을 위해 메시지를 보내주세요.",
+                form_name: "이름", form_email: "이메일", form_msg: "메시지", form_submit: "데이터 전송"
+            },
+            it: {
+                nav_home: "Home", nav_about: "Chi Sono", nav_skills: "Competenze", nav_projects: "Progetti",
+                nav_barber: "Barbiere 💈", nav_terminal: "Terminale C", nav_contact: "Contatti",
+                hero_status: "SYSTEM.STATUS: DISPONIBILE", hero_greeting: "CIAO, SONO",
+                hero_desc: "Studente B.Tech CSE. Editor Video e Sviluppatore Web.",
+                hero_cta_work: "Esegui_Portfolio", hero_cta_barber: "Carica_Barbiere.exe",
+                about_title: "SYSTEM.INFO // BIO", about_heading_bio: "Chi è Swastik?",
+                about_text_1: "Studente B.Tech CSE presso il PW Institute.",
+                about_text_2: "Esperienza di oltre 6 mesi in editing video.",
+                stat_exp: "Mesi Editing", stat_web: "Cloni Web", stat_vibe: "Creatività", stat_sim: "Simulazioni",
+                barber_main_title: "JUKEBOX DEL BARBIERE 💈", barber_sub_title: "Musica retrò e ASMR da barbiere!",
+                fx_scissor: "✂️ Forbici", fx_dryer: "💨 Phon", fx_massage: "💆‍♂️ Massaggio",
+                skills_title: "COMPETENZE", sk_cat_video: "Media / Editing", sk_cat_dev: "Web / Programmazione",
+                proj_title: "PROGETTI_ESEGUITI", proj_desc_netflix: "Clone di Netflix.",
+                proj_desc_amazon: "Clone login Amazon.", drive_title: "Reel di Montaggio",
+                drive_desc: "Video brevi ed eventi.", drive_btn: "APRI_DRIVE",
+                term_title: "C_COMPILER_SIMULATOR", term_select_label: "SELEZIONA CODICE:", term_run_btn: "ESEGUI",
+                cnt_title: "INIZIA_CONTATTO", cnt_heading: "Comm_Link_Active", cnt_desc: "Messaggiami per progetti.",
+                form_name: "NOME", form_email: "EMAIL", form_msg: "MESSAGGIO", form_submit: "INVIA_DATI"
             }
         };
 
