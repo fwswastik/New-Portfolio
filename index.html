@@ -699,8 +699,8 @@
             </div>
 
             <div class="player-area" style="display: block;">
-                <!-- Spotify Embed for 90s Bollywood Nostalgia -->
-                <iframe style="border-radius:0; border: 4px solid var(--border); box-shadow: 12px 12px 0px var(--blue);" src="https://open.spotify.com/embed/playlist/68SlxR9n2Ij1fTcNoQqF3f?utm_source=generator&si=2da673d5c46d4f66" width="100%" height="450" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <!-- User's Spotify Playlist Embed -->
+                <iframe data-testid="embed-iframe" style="border-radius:12px; border: 4px solid var(--border); box-shadow: 12px 12px 0px var(--blue);" src="https://open.spotify.com/embed/playlist/68SlxR9n2Ij1fTcNoQqF3f?utm_source=generator&si=2da673d5c46d4f66" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </section>
@@ -1092,7 +1092,7 @@
         function startTypingEffect() { charIndex = 0; isDeleting = false; }
         typeLoop();
 
-        // Music is now handled purely by the embedded Spotify Iframe player!
+        // Music is now handled by the embedded Spotify Iframe provided by user
         
         // Audio Synth ASMR
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
