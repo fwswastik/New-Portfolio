@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swastik Mishra | Creative Developer & Video Editor | Barber Shop Jukebox 💈</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==================== DESIGN SYSTEM & TOKENS ==================== */
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --accent-glow: rgba(6, 182, 212, 0.4);
+            --bg-dark: #090d16;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --barber-red: #ef4444;
+            --barber-blue: #3b82f6;
+            --barber-white: #ffffff;
+            --font-main: 'Outfit', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-code: 'Fira Code', monospace;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f1f5f9;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-hover: rgba(241, 245, 249, 0.95);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+
+        /* Background Animated Glow Blobs */
+        .glow-blob {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            animation: floatBlob 18s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        .blob-1 { top: -100px; left: -100px; background: var(--primary); }
+        .blob-2 { bottom: -100px; right: -100px; background: var(--secondary); animation-delay: -5s; }
+        .blob-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent); animation-delay: -10s; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 80px) scale(1.15); }
+        }
+
+        /* Glassmorphism Helper */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Section Headings */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ==================== HEADER & NAVBAR ==================== */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: 1250px;
+            z-index: 1000;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo span {
+            color: var(--primary);
+        }
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .barber-nav-btn {
+            background: linear-gradient(45deg, var(--barber-red), var(--barber-blue));
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: #fff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            animation: pulseBarber 2s infinite;
+        }
+        @keyframes pulseBarber {
+            0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* Language Selector */
+        .lang-select-wrapper {
+            position: relative;
+        }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .lang-dropdown {
+            position: absolute;
+            top: 110%;
+            right: 0;
+            width: 180px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            padding: 8px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 1001;
+        }
+        .lang-dropdown.show {
+            display: flex;
+        }
+        .lang-opt {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        .lang-opt:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        .theme-toggle-btn:hover {
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero-section {
+            min-height: 100vh;
+            padding-top: 140px;
+            padding-bottom: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .name-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .typing-container {
+            font-size: 1.6rem;
+            color: var(--accent);
+            font-weight: 600;
+            height: 40px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 28px;
+            background-color: var(--accent);
+            animation: cursorBlink 0.8s infinite;
+        }
+        @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 580px;
+            margin-bottom: 36px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px var(--primary-glow);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 14px 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--text-muted);
+            transform: translateY(-3px);
+        }
+
+        .btn-barber-hero {
+            background: linear-gradient(135deg, var(--barber-red), var(--barber-blue));
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+            transition: var(--transition);
+        }
+        .btn-barber-hero:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Profile Image Container */
+        .hero-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-frame {
+            position: relative;
+            width: 340px;
+            height: 420px;
+            border-radius: 28px;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+            animation: rotateBorder 10s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .user-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+        }
+
+        /* Floating Chips */
+        .chip {
+            position: absolute;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            padding: 10px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: floatChip 4s ease-in-out infinite alternate;
+        }
+        .chip-1 { top: 20px; left: -30px; animation-delay: 0s; }
+        .chip-2 { bottom: 30px; right: -30px; animation-delay: -2s; }
+        .chip-3 { bottom: -20px; left: 20px; animation-delay: -1s; }
+
+        @keyframes floatChip {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+
+        /* ==================== ABOUT & STATS ==================== */
+        .about-section {
+            padding: 100px 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .about-card {
+            padding: 36px;
+        }
+
+        .about-card h3 {
+            font-size: 1.8rem;
+            font-family: var(--font-heading);
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .quick-info-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .quick-info-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .quick-info-list i {
+            color: var(--accent);
+            width: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .stat-box {
+            padding: 24px;
+            text-align: center;
+        }
+        .stat-num {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ==================== BARBER SHOP JUKEBOX ==================== */
+        .barber-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .barber-wrapper {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.95));
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 32px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(239, 68, 68, 0.15);
+        }
+
+        /* Barber Pole Neon Stripes Header */
+        .barber-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-glass);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .barber-sign {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .barber-pole-animated {
+            width: 36px;
+            height: 90px;
+            border-radius: 18px;
+            border: 3px solid #ffffff;
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--barber-red),
+                var(--barber-red) 15px,
+                var(--barber-white) 15px,
+                var(--barber-white) 30px,
+                var(--barber-blue) 30px,
+                var(--barber-blue) 45px
+            );
+            background-size: 200% 200%;
+            animation: poleSpin 4s linear infinite;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+        @keyframes poleSpin {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        .barber-title-group h2 {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .barber-title-group p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Barber ASMR Sound Board */
+        .barber-fx-board {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .fx-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .fx-btn:hover {
+            background: var(--barber-red);
+            border-color: var(--barber-red);
+            transform: scale(1.05);
+        }
+        .fx-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Player Grid */
+        .jukebox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* Player Left: Spinning Vinyl & Controls */
+        .player-deck {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .vinyl-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 24px;
+        }
+        .vinyl-disc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #222 25%, #111 26%, #111 40%, #050505 41%, #000 100%);
+            border: 4px solid #333;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spinVinyl 12s linear infinite;
+            animation-play-state: paused;
+        }
+        .vinyl-disc.playing {
+            animation-play-state: running;
+        }
+        @keyframes spinVinyl {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .vinyl-art {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+        }
+
+        /* Spectrum Visualizer Canvas */
+        #visualizerCanvas {
+            width: 100%;
+            height: 60px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .current-track-info h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .current-track-info p {
+            color: var(--barber-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* Player Controls */
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .control-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        .control-btn.play-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--barber-red), var(--secondary));
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--barber-red), var(--barber-blue));
+            border-radius: 4px;
+        }
+
+        /* Playlist Selector */
+        .playlist-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .song-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            padding: 14px 18px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .song-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(6px);
+        }
+        .song-card.active {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--barber-red);
+        }
+
+        .song-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .song-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        .song-details h5 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+        .song-details p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .song-tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--barber-blue);
+            font-weight: 600;
+        }
+
+        /* ==================== SKILLS & EXPERTISE ==================== */
+        .skills-section {
+            padding: 100px 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-group-card {
+            padding: 32px;
+        }
+        .skill-group-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .skill-group-header i {
+            font-size: 1.6rem;
+            color: var(--primary);
+        }
+        .skill-group-header h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1);
+        }
+
+        /* ==================== PROJECTS & REELS SHOWCASE ==================== */
+        .projects-section {
+            padding: 100px 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-thumb {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background: #1e293b;
+        }
+
+        .project-meta h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        .project-meta p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .tag {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .drive-banner-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 40px;
+            border-radius: 28px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* ==================== C CODE TERMINAL SIMULATOR ==================== */
+        .terminal-section {
+            padding: 80px 0;
+        }
+
+        .terminal-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            font-family: var(--font-code);
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .mac-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #8b949e;
+            font-size: 0.85rem;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .code-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .code-select {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+        }
+        .code-preview {
+            background: #161b22;
+            padding: 16px;
+            border-radius: 12px;
+            color: #58a6ff;
+            height: 220px;
+            overflow-y: auto;
+            white-space: pre;
+            font-size: 0.85rem;
+        }
+
+        .terminal-output {
+            background: #000;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            color: #3fb950;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .output-header {
+            color: #8b949e;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #30363d;
+            padding-bottom: 4px;
+        }
+
+        /* ==================== EDUCATION & SIMULATIONS ==================== */
+        .timeline-section {
+            padding: 100px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+        .timeline-item.left { left: 0; text-align: right; }
+        .timeline-item.right { left: 50%; text-align: left; }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 4px solid var(--bg-dark);
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            z-index: 10;
+        }
+        .timeline-item.right .timeline-dot { left: -10px; }
+
+        .timeline-content {
+            padding: 24px;
+        }
+
+        /* ==================== CONTACT ==================== */
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+        }
+
+        .contact-info-card {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .contact-form {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .form-group input, .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 14px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            border-top: 1px solid var(--border-glass);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 2000;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 992px) {
+            .hero-grid, .about-grid, .jukebox-grid, .contact-grid, .terminal-body {
+                grid-template-columns: 1fr;
+            }
+            .hero-title { font-size: 2.8rem; }
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; text-align: left !important; }
+            .timeline-item.right { left: 0; }
+            .timeline-dot { left: 10px !important; }
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-card);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 20px;
+            }
+            nav ul.show { display: flex; }
+            .menu-btn { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Glow Blobs -->
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="glow-blob blob-3"></div>
+
+    <!-- Header & Navigation -->
+    <header class="glass-card">
+        <a href="#" class="logo">
+            SWASTIK<span>MISHRA</span>
+            <span class="logo-dot"></span>
+        </a>
+
+        <button class="menu-btn" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#hero" class="active" data-i18n="nav_home"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="#about" data-i18n="nav_about"><i class="fa-solid fa-user"></i> About</a></li>
+                <li><a href="#skills" data-i18n="nav_skills"><i class="fa-solid fa-bolt"></i> Skills</a></li>
+                <li><a href="#projects" data-i18n="nav_projects"><i class="fa-solid fa-film"></i> Projects</a></li>
+                <li><a href="#barber" class="barber-nav-btn" data-i18n="nav_barber"><i class="fa-solid fa-scissors"></i> Barber Shop 💈</a></li>
+                <li><a href="#terminal" data-i18n="nav_terminal"><i class="fa-solid fa-code"></i> C-Terminal</a></li>
+                <li><a href="#contact" data-i18n="nav_contact"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-controls">
+            <!-- Language Selector Dropdown -->
+            <div class="lang-select-wrapper">
+                <button class="lang-btn" id="langBtn">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="currentLangText">English</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-opt" data-lang="en">🇺🇸 English</button>
+                    <button class="lang-opt" data-lang="hi">🇮🇳 हिंदी (Hindi)</button>
+                    <button class="lang-opt" data-lang="hinglish">🇮🇳 Hinglish</button>
+                    <button class="lang-opt" data-lang="pa">🇮🇳 ਪੰਜਾਬੀ (Punjabi)</button>
+                    <button class="lang-opt" data-lang="bn">🇮🇳 বাংলা (Bengali)</button>
+                    <button class="lang-opt" data-lang="es">🇪🇸 Español</button>
+                    <button class="lang-opt" data-lang="fr">🇫🇷 Français</button>
+                    <button class="lang-opt" data-lang="ja">🇯🇵 日本語 (Japanese)</button>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero-section" id="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span class="status-dot"></span>
+                    <span data-i18n="hero_status">Open for Internship & Collaborations</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span data-i18n="hero_greeting">Hey, I'm</span> <br>
+                    <span class="name-gradient">SWASTIK MISHRA</span>
+                </h1>
+
+                <div class="typing-container">
+                    <span id="typingText"></span>
+                    <span class="typing-cursor"></span>
+                </div>
+
+                <p class="hero-description" data-i18n="hero_desc">
+                    B.Tech Computer Science student at PW Institute of Innovation. Creative Video Editor, Cinematographer & Aspiring Web Developer building interactive digital experiences with modern code and high-impact visuals.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary" data-i18n="hero_cta_work">
+                        <i class="fa-solid fa-play"></i> Explore My Work
+                    </a>
+                    <a href="#barber" class="btn-barber-hero" data-i18n="hero_cta_barber">
+                        <i class="fa-solid fa-radio"></i> Barber Shop FM 💈
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1ZSvbTNV_iPkjyasQajy1AY8inuZouo8o" target="_blank" class="btn-secondary">
+                        <i class="fa-brands fa-google-drive"></i> Drive Reel
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-img-wrapper">
+                <div class="img-frame">
+                    <img src="swastik_photo.jpg" alt="Swastik Mishra Profile" class="user-photo">
+                </div>
+
+                <!-- Floating Badges -->
+                <div class="chip chip-1">
+                    <i class="fa-solid fa-scissors" style="color: var(--secondary);"></i>
+                    <span data-i18n="chip_editor">Video Editor</span>
+                </div>
+                <div class="chip chip-2">
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--accent);"></i>
+                    <span>PW Institute CSE</span>
+                </div>
+                <div class="chip chip-3">
+                    <i class="fa-solid fa-code" style="color: var(--primary);"></i>
+                    <span>C & Web Tech</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="about_badge">MY JOURNEY</span>
+                <h2 class="section-title" data-i18n="about_title">Driven By Code & Visual Storytelling</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-card glass-card">
+                    <h3 data-i18n="about_heading_bio">Who is Swastik Mishra?</h3>
+                    <p data-i18n="about_text_1">
+                        I am a passionate B.Tech CSE student at PW Institute of Innovation (2025–2029) based out of Lucknow, Uttar Pradesh. I bridge the gap between creative visual content creation and foundational web technology.
+                    </p>
+                    <p data-i18n="about_text_2">
+                        Active member of the Content Creation Team at PW Institute of Innovation for over 6 months, creating engaging short-form video reels, promotional materials, and event cinematography.
+                    </p>
+                    
+                    <ul class="quick-info-list">
+                        <li><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Lucknow, Uttar Pradesh, India</li>
+                        <li><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> realswastik.op@gmail.com</li>
+                        <li><i class="fa-solid fa-phone"></i> <strong>Phone:</strong> +91 9369908688</li>
+                        <li><i class="fa-solid fa-language"></i> <strong>Languages:</strong> Hindi (Fluent), English (Intermediate)</li>
+                    </ul>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box glass-card">
+                        <div class="stat-num">6+</div>
+                        <div class="stat-label" data-i18n="stat_exp">Months Video Editing @ PW</div>
+                    </div>
+                    <div class="stat-box glass-card">
+                        <div class="stat-num">4+</div>
+                        <div class="stat-label" data-i18n="stat_web">Web Landing Page Clones</div>
+                    </div>
+                    <div class="stat-box glass-card">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-label" data-i18n="stat_vibe">Creative Enthusiasm</div>
+                    </div>
+                    <div class="stat-box glass-card">
+                        <div class="stat-num">3+</div>
+                        <div class="stat-label" data-i18n="stat_sim">Corporate Simulations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BARBER SHOP JUKEBOX SECTION ==================== -->
+    <section class="barber-section" id="barber">
+        <div class="container">
+            <div class="barber-wrapper">
+                
+                <!-- Barber Header Banner -->
+                <div class="barber-banner">
+                    <div class="barber-sign">
+                        <div class="barber-pole-animated"></div>
+                        <div class="barber-title-group">
+                            <h2>
+                                <i class="fa-solid fa-scissors" style="color: var(--barber-red);"></i>
+                                <span data-i18n="barber_main_title">INDIAN BARBER SHOP JUKEBOX & FM 💈</span>
+                            </h2>
+                            <p data-i18n="barber_sub_title">Nostalgic 90s/2000s Salon Songs, Retro Radio & Haircut ASMR Sound Board!</p>
+                        </div>
+                    </div>
+
+                    <!-- ASMR Sound FX Buttons -->
+                    <div class="barber-fx-board">
+                        <button class="fx-btn" id="fxScissor">
+                            <i class="fa-solid fa-scissors"></i> <span data-i18n="fx_scissor">✂️ Scissor Snip</span>
+                        </button>
+                        <button class="fx-btn" id="fxDryer">
+                            <i class="fa-solid fa-wind"></i> <span data-i18n="fx_dryer">💨 Hair Dryer</span>
+                        </button>
+                        <button class="fx-btn" id="fxMassage">
+                            <i class="fa-solid fa-spa"></i> <span data-i18n="fx_massage">💆‍♂️ Head Massage ASMR</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Jukebox Main Interactive Area -->
+                <div class="jukebox-grid">
+                    
+                    <!-- Left: Vinyl Player & Visualizer -->
+                    <div class="player-deck">
+                        <div class="vinyl-container">
+                            <div class="vinyl-disc" id="vinylDisc">
+                                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80" alt="Album Art" class="vinyl-art" id="currentTrackArt">
+                            </div>
+                        </div>
+
+                        <!-- Real-time Canvas Equalizer -->
+                        <canvas id="visualizerCanvas"></canvas>
+
+                        <div class="current-track-info">
+                            <h4 id="currentTrackTitle">Kumar Sanu - 90s Haircut Superhit Classic</h4>
+                            <p id="currentTrackSinger">Retro Barber FM 98.3 • Lucknow Salon Vibe</p>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="player-controls">
+                            <button class="control-btn" id="prevTrackBtn"><i class="fa-solid fa-backward-step"></i></button>
+                            <button class="control-btn play-btn" id="playPauseBtn"><i class="fa-solid fa-play"></i></button>
+                            <button class="control-btn" id="nextTrackBtn"><i class="fa-solid fa-forward-step"></i></button>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <span id="currentTime">0:00</span>
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span id="duration">3:45</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Barber Shop Playlist -->
+                    <div class="playlist-container" id="playlistContainer">
+                        <!-- Dynamic Songs Rendered Here -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SKILLS SECTION ==================== -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="skills_badge">TALENT & TOOLS</span>
+                <h2 class="section-title" data-i18n="skills_title">Creative & Technical Expertise</h2>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Skill Group 1: Creative & Video -->
+                <div class="skill-group-card glass-card">
+                    <div class="skill-group-header">
+                        <i class="fa-solid fa-video"></i>
+                        <h3 data-i18n="sk_cat_video">Video Editing & Media</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Video Editing & Storytelling</span><span>90%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Cinematography & Framing</span><span>85%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Graphic Designing & Thumbnails</span><span>80%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Photo Editing & Visual Effects</span><span>82%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 82%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Group 2: Web & Programming -->
+                <div class="skill-group-card glass-card">
+                    <div class="skill-group-header">
+                        <i class="fa-solid fa-code"></i>
+                        <h3 data-i18n="sk_cat_dev">Web & Programming</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info"><span>HTML5 Fundamentals & Semantics</span><span>88%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>C Language & Algorithms</span><span>75%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Logical Thinking & Problem Solving</span><span>85%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>UI/UX Styling & Layouts</span><span>80%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Group 3: Professional Strengths -->
+                <div class="skill-group-card glass-card">
+                    <div class="skill-group-header">
+                        <i class="fa-solid fa-handshake"></i>
+                        <h3 data-i18n="sk_cat_soft">Core Strengths</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Team Collaboration</span><span>95%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Time Management</span><span>90%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Conflict Resolution</span><span>85%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info"><span>Quick Adaptability</span><span>92%</span></div>
+                            <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS & REELS SECTION ==================== -->
+    <section class="projects-section" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="proj_badge">PORTFOLIO SHOWCASE</span>
+                <h2 class="section-title" data-i18n="proj_title">Web Projects & Video Editing Reel</h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Netflix Landing Page -->
+                <div class="project-card glass-card">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=600&q=80" alt="Netflix Clone" class="project-thumb">
+                        <div class="project-meta">
+                            <h3>Netflix Landing Page Clone</h3>
+                            <p data-i18n="proj_desc_netflix">A sleek front-end clone of Netflix showcasing responsive grid layout, hero banner, and video preview styling.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3 Grid</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amazon Login Page -->
+                <div class="project-card glass-card">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?auto=format&fit=crop&w=600&q=80" alt="Amazon Login" class="project-thumb">
+                        <div class="project-meta">
+                            <h3>Amazon Auth & Login Page</h3>
+                            <p data-i18n="proj_desc_amazon">Pixel-perfect replication of Amazon's login authentication interface with form validation structure.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-tags">
+                            <span class="tag">HTML Forms</span>
+                            <span class="tag">Flexbox</span>
+                            <span class="tag">UI Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YouTube Home Page -->
+                <div class="project-card glass-card">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80" alt="YouTube Replica" class="project-thumb">
+                        <div class="project-meta">
+                            <h3>YouTube Home Page Replica</h3>
+                            <p data-i18n="proj_desc_yt">Full-featured desktop YouTube interface layout complete with sidebar navigation, search bar, and video card grid.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS Grid</span>
+                            <span class="tag">UI Layout</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fashion Store Landing Page -->
+                <div class="project-card glass-card">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="Fashion Store" class="project-thumb">
+                        <div class="project-meta">
+                            <h3>Fashion Store E-Commerce Landing</h3>
+                            <p data-i18n="proj_desc_fashion">Vibrant fashion retail store landing page with modern product cards, hover animations, and hero banner.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-tags">
+                            <span class="tag">E-Commerce</span>
+                            <span class="tag">CSS Styling</span>
+                            <span class="tag">Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drive Video Editing Banner Callout -->
+            <div class="drive-banner-card glass-card">
+                <i class="fa-solid fa-clapperboard" style="font-size: 3rem; color: var(--secondary);"></i>
+                <h3 style="font-size: 1.8rem;" data-i18n="drive_title">Explore Swastik's Video Editing Drive Reel</h3>
+                <p style="color: var(--text-muted); max-width: 650px;" data-i18n="drive_desc">
+                    Includes short-form reels, event coverage for PW Institute of Innovation, video cinematography edits, promotional promos, and graphic design posters.
+                </p>
+                <a href="https://drive.google.com/drive/folders/1ZSvbTNV_iPkjyasQajy1AY8inuZouo8o" target="_blank" class="btn-primary">
+                    <i class="fa-brands fa-google-drive"></i> <span data-i18n="drive_btn">Open Full Google Drive Folder</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== C CODE TERMINAL SIMULATOR ==================== -->
+    <section class="terminal-section" id="terminal">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="term_badge">INTERACTIVE SANDBOX</span>
+                <h2 class="section-title" data-i18n="term_title">C Programming Code Runner</h2>
+            </div>
+
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="mac-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <span class="terminal-title">swastik_mishra_c_compiler.c — bash</span>
+                    <span><i class="fa-solid fa-terminal" style="color: #3fb950;"></i></span>
+                </div>
+
+                <div class="terminal-body">
+                    <div class="code-input-area">
+                        <label style="color: #8b949e; font-size: 0.85rem;" data-i18n="term_select_label">Select C Program Sample:</label>
+                        <select class="code-select" id="codeSnippetSelect">
+                            <option value="avg">1. Calculate Average of Numbers (C)</option>
+                            <option value="ifelse">2. Nested IF-ELSE Decision Logic (C)</option>
+                            <option value="pattern">3. Star Pattern Printing Loop (C)</option>
+                        </select>
+
+                        <div class="code-preview" id="codePreviewText">// Code preview will load here</div>
+
+                        <button class="btn-primary" id="runCodeBtn" style="padding: 10px 20px; font-size: 0.9rem;">
+                            <i class="fa-solid fa-play"></i> <span data-i18n="term_run_btn">Run C Code</span>
+                        </button>
+                    </div>
+
+                    <div class="terminal-output">
+                        <div class="output-header">STDOUT / TERMINAL OUTPUT</div>
+                        <div id="terminalStdout" style="line-height: 1.5;">Click "Run C Code" to execute the program...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== EDUCATION & CERTIFICATIONS ==================== -->
+    <section class="timeline-section" id="education">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="edu_badge">MILESTONES</span>
+                <h2 class="section-title" data-i18n="edu_title">Education & Simulations</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Item 1: PW Institute -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">2025 - 2029</span>
+                        <h3 style="font-size: 1.3rem; margin-top: 4px;">PW Institute of Innovation</h3>
+                        <p style="color: var(--primary); font-weight: 600;">B.Tech in Computer Science Engineering</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;" data-i18n="edu_pw_desc">
+                            Core computer science education, data structures, programming fundamentals, active member of Content Creation Team and Entrepreneurship Cell (E-Cell).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Ajmani Class 12 -->
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">2023 - 2024</span>
+                        <h3 style="font-size: 1.3rem; margin-top: 4px;">Ajmani Public School</h3>
+                        <p style="color: var(--secondary); font-weight: 600;">Class 12th Higher Secondary</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">
+                            Completed Senior Secondary Education with focus on science and logical reasoning.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 3: Job Simulations & Workshops -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">Certifications & Webinars</span>
+                        <h3 style="font-size: 1.3rem; margin-top: 4px;">Industry Job Simulations</h3>
+                        <ul style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px; list-style-position: inside;">
+                            <li>Outskill Generative AI Workshop</li>
+                            <li>Deloitte Data Analytics Job Simulation (Forage)</li>
+                            <li>Deloitte Cyber Security Job Simulation (Forage)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-i18n="cnt_badge">GET IN TOUCH</span>
+                <h2 class="section-title" data-i18n="cnt_title">Let's Connect & Collaborate</h2>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info-card glass-card">
+                    <h3 style="font-size: 1.8rem; font-family: var(--font-heading);" data-i18n="cnt_heading">Contact Information</h3>
+                    <p style="color: var(--text-muted);" data-i18n="cnt_desc">Have an exciting video editing project, web design opportunity, or just want to listen to Barber Shop tunes? Reach out!</p>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Email Swastik</div>
+                            <div style="font-weight: 600;">realswastik.op@gmail.com</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Phone / WhatsApp</div>
+                            <div style="font-weight: 600;">+91 9369908688</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Location</div>
+                            <div style="font-weight: 600;">Lucknow, Uttar Pradesh, India</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; margin-top: 10px;">
+                        <button class="btn-secondary" id="copyEmailBtn" style="padding: 10px 18px; font-size: 0.9rem;">
+                            <i class="fa-solid fa-copy"></i> Copy Email
+                        </button>
+                        <a href="https://wa.me/919369908688" target="_blank" class="btn-primary" style="padding: 10px 18px; font-size: 0.9rem; background: #25D366; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form glass-card" id="contactForm">
+                    <div class="form-group">
+                        <label data-i18n="form_name">Your Name</label>
+                        <input type="text" placeholder="e.g. Rahul Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form_email">Your Email</label>
+                        <input type="email" placeholder="e.g. rahul@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form_msg">Message</label>
+                        <textarea rows="4" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" data-i18n="form_submit">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYear"></span> <strong>Swastik Mishra</strong>. Designed & Crafted with ❤️, Code & Barber Shop Vibes 💈</p>
+        </div>
+    </footer>
+
+    <!-- Toast Popup Notification -->
+    <div class="toast" id="toastNotification">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Notification message here</span>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        /* ==================== MULTI-LANGUAGE TRANSLATIONS ==================== */
+        const translations = {
+            en: {
+                nav_home: "Home",
+                nav_about: "About",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                nav_barber: "Barber Shop 💈",
+                nav_terminal: "C-Terminal",
+                nav_contact: "Contact",
+                hero_status: "Open for Internship & Collaborations",
+                hero_greeting: "Hey, I'm",
+                hero_desc: "B.Tech Computer Science student at PW Institute of Innovation. Creative Video Editor, Cinematographer & Aspiring Web Developer building interactive digital experiences.",
+                hero_cta_work: "Explore My Work",
+                hero_cta_barber: "Barber Shop FM 💈",
+                chip_editor: "Video Editor",
+                about_badge: "MY JOURNEY",
+                about_title: "Driven By Code & Visual Storytelling",
+                about_heading_bio: "Who is Swastik Mishra?",
+                about_text_1: "I am a passionate B.Tech CSE student at PW Institute of Innovation (2025–2029) based in Lucknow, Uttar Pradesh. I bridge creative visual media creation and modern web technology.",
+                about_text_2: "Content Creation Team member at PW Institute of Innovation for over 6 months, crafting short-form reels, event cinematography, and social media media visual branding.",
+                stat_exp: "Months Video Editing @ PW",
+                stat_web: "Web Landing Page Clones",
+                stat_vibe: "Creative Enthusiasm",
+                stat_sim: "Corporate Simulations",
+                barber_main_title: "INDIAN BARBER SHOP JUKEBOX & FM 💈",
+                barber_sub_title: "Nostalgic 90s/2000s Salon Songs, Retro Radio & Haircut ASMR Sound Board!",
+                fx_scissor: "✂️ Scissor Snip",
+                fx_dryer: "💨 Hair Dryer",
+                fx_massage: "💆‍♂️ Head Massage ASMR",
+                skills_badge: "TALENT & TOOLS",
+                skills_title: "Creative & Technical Expertise",
+                sk_cat_video: "Video Editing & Media",
+                sk_cat_dev: "Web & Programming",
+                sk_cat_soft: "Core Strengths",
+                proj_badge: "PORTFOLIO SHOWCASE",
+                proj_title: "Web Projects & Video Editing Reel",
+                proj_desc_netflix: "A sleek front-end clone of Netflix showcasing responsive grid layout, hero banner, and video preview styling.",
+                proj_desc_amazon: "Pixel-perfect replication of Amazon's login authentication interface with form validation structure.",
+                proj_desc_yt: "Full-featured desktop YouTube interface layout complete with sidebar navigation, search bar, and video card grid.",
+                proj_desc_fashion: "Vibrant fashion retail store landing page with modern product cards, hover animations, and hero banner.",
+                drive_title: "Explore Swastik's Video Editing Drive Reel",
+                drive_desc: "Includes short-form reels, event coverage for PW Institute of Innovation, video cinematography edits, promotional promos, and graphic design posters.",
+                drive_btn: "Open Full Google Drive Folder",
+                term_badge: "INTERACTIVE SANDBOX",
+                term_title: "C Programming Code Runner",
+                term_select_label: "Select C Program Sample:",
+                term_run_btn: "Run C Code",
+                edu_badge: "MILESTONES",
+                edu_title: "Education & Simulations",
+                edu_pw_desc: "Core computer science education, programming fundamentals, active member of Content Creation Team and E-Cell.",
+                cnt_badge: "GET IN TOUCH",
+                cnt_title: "Let's Connect & Collaborate",
+                cnt_heading: "Contact Information",
+                cnt_desc: "Have an exciting video editing project, web design opportunity, or just want to listen to Barber Shop tunes? Reach out!",
+                form_name: "Your Name",
+                form_email: "Your Email",
+                form_msg: "Message",
+                form_submit: "Send Message"
+            },
+            hi: {
+                nav_home: "होम",
+                nav_about: "मेरे बारे में",
+                nav_skills: "कौशल",
+                nav_projects: "प्रोजेक्ट्स",
+                nav_barber: "नाई की दुकान 💈",
+                nav_terminal: "C-टर्मिनल",
+                nav_contact: "संपर्क करें",
+                hero_status: "इंटरनशिप और काम के लिए उपलब्ध",
+                hero_greeting: "नमस्ते, मैं हूँ",
+                hero_desc: "PW इंस्टीट्यूट ऑफ इनोवेशन में B.Tech कंप्यूटर साइंस छात्र। क्रिएटिव वीडियो एडिटर, सिनेमैटोग्राफर और वेब डेवलपर जो नई टेक्नोलॉजी के साथ काम करता है।",
+                hero_cta_work: "मेरा काम देखें",
+                hero_cta_barber: "नाई दुकान रेडियो 💈",
+                chip_editor: "वीडियो एडिटर",
+                about_badge: "मेरा सफर",
+                about_title: "कोड और विजुअल स्टोरीटेलिंग का मेल",
+                about_heading_bio: "स्वास्तिक मिश्रा कौन हैं?",
+                about_text_1: "मैं लखनऊ, उत्तर प्रदेश से PW इंस्टीट्यूट ऑफ इनोवेशन (2025–2029) में B.Tech CSE का छात्र हूँ।",
+                about_text_2: "PW इंस्टीट्यूट की कंटेंट क्रिएशन टीम में 6 महीने से अधिक समय से सक्रिय सदस्य हूँ, रील्स, इवेंट्स और वीडियो एडिटिंग करता हूँ।",
+                stat_exp: "महीने वीडियो एडिटिंग अनुभव",
+                stat_web: "वेब लैंडिंग पेज क्लोन",
+                stat_vibe: "क्रिएटिव ऊर्जा",
+                stat_sim: "कॉरपोरेट सिमुलेशन",
+                barber_main_title: "इंडियन बारबर शॉप ज्यूकबॉक्स और एफएम 💈",
+                barber_sub_title: "90s और 2000s के नाई की दुकान वाले सदाबहार गाने, रेडियो और कटिंग की आवाजें!",
+                fx_scissor: "✂️ कैंची की आवाज",
+                fx_dryer: "💨 हेयर ड्रायर",
+                fx_massage: "💆‍♂️ हेड मसाज ASMR",
+                skills_badge: "कौशल और उपकरण",
+                skills_title: "क्रिएटिव और टेक्निकल स्किल",
+                sk_cat_video: "वीडियो एडिटिंग और मीडिया",
+                sk_cat_dev: "वेब और प्रोग्रामिंग",
+                sk_cat_soft: "मुख्य क्षमताएं",
+                proj_badge: "पोर्टफोलियो",
+                proj_title: "वेब प्रोजेक्ट्स और वीडियो रील्स",
+                proj_desc_netflix: "नेटफ्लिक्स का शानदार फ्रंट-एंड क्लोन जो रेस्पॉन्सिव ग्रिड और बैनर दिखाता है।",
+                proj_desc_amazon: "अमेज़न का लॉगिन पेज रिप्लिकेशन फॉर्म वैलिडेशन के साथ।",
+                proj_desc_yt: "यूट्यूब होम पेज का पूरा डिज़ाइन और नेविगेशन री-क्रिएशन।",
+                proj_desc_fashion: "फैशन स्टोर का आधुनिक ई-कॉमर्स लैंडिंग पेज।",
+                drive_title: "स्वास्तिक की वीडियो एडिटिंग ड्राइव देखें",
+                drive_desc: "शॉर्ट रील्स, PW इंस्टीट्यूट के इवेंट वीडियो, सिनेमैटोग्राफी और ग्राफिक्स।",
+                drive_btn: "गूगल ड्राइव फोल्डर खोलें",
+                term_badge: "लाइव कोडिंग",
+                term_title: "C लैंग्वेज कोड रनर",
+                term_select_label: "C प्रोग्राम चुनें:",
+                term_run_btn: "C कोड चलाएं",
+                edu_badge: "शिक्षा",
+                edu_title: "पढ़ाई और सिमुलेशन",
+                edu_pw_desc: "कंप्यूटर साइंस इंजीनियरिंग, कंटेंट क्रिएशन टीम और ई-सेल के सक्रिय सदस्य।",
+                cnt_badge: "संपर्क",
+                cnt_title: "चलिए साथ मिलकर काम करें",
+                cnt_heading: "संपर्क जानकारी",
+                cnt_desc: "वीडियो एडिटिंग, वेब डेवलपमेंट या नाई दुकान के गानों की बात करनी हो तो मैसेज करें!",
+                form_name: "आपका नाम",
+                form_email: "आपकी ईमेल",
+                form_msg: "संदेश",
+                form_submit: "संदेश भेजें"
+            },
+            hinglish: {
+                nav_home: "Home",
+                nav_about: "Mere Baare Mein",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                nav_barber: "Barber Shop 💈",
+                nav_terminal: "C-Terminal",
+                nav_contact: "Contact Karo",
+                hero_status: "Internship & Freelance Available",
+                hero_greeting: "Hey Bhai, Main Hoon",
+                hero_desc: "PW Institute of Innovation se B.Tech CSE student. Creative Video Editor, Cinematographer & Web Developer jo mast visual websites aur videos banata hai.",
+                hero_cta_work: "Mera Kaam Dekho",
+                hero_cta_barber: "Barber Shop FM 💈",
+                chip_editor: "Video Editor",
+                about_badge: "MERA SAFAR",
+                about_title: "Coding Aur Editing Ka Perfect Mix",
+                about_heading_bio: "Kaun Hai Swastik Mishra?",
+                about_text_1: "Main Lucknow se B.Tech Computer Science student hoon PW Institute of Innovation mein (2025–2029).",
+                about_text_2: "PW Institute ki Content Creation Team mein 6+ months se video editing aur reels bana raha hoon.",
+                stat_exp: "Months Editing @ PW",
+                stat_web: "Web Page Clones",
+                stat_vibe: "Mast Creativity",
+                stat_sim: "Corporate Simulations",
+                barber_main_title: "INDIAN BARBER SHOP JUKEBOX & FM 💈",
+                barber_sub_title: "Indian Barber Shop waale saare 90s/2000s superhit gaane aur scissor sounds!",
+                fx_scissor: "✂️ कैंची Snip Sound",
+                fx_dryer: "💨 Hair Dryer",
+                fx_massage: "💆‍♂️ Head Massage ASMR",
+                skills_badge: "SKILLS",
+                skills_title: "Creative & Technical Skills",
+                sk_cat_video: "Video Editing & Media",
+                sk_cat_dev: "Web & C Language",
+                sk_cat_soft: "Teamwork & Strengths",
+                proj_badge: "SHOWCASE",
+                proj_title: "Web Clones & Drive Reels",
+                proj_desc_netflix: "Netflix jaisa mast landing page clone with responsive design.",
+                proj_desc_amazon: "Amazon ka official login page replica with exact layout.",
+                proj_desc_yt: "Full YouTube desktop homepage layout with search & cards.",
+                proj_desc_fashion: "Cool fashion store landing page with modern cards.",
+                drive_title: "Swastik Ki Full Video Editing Drive Folder",
+                drive_desc: "PW Institute ke saare promotional videos, short reels aur posters yahan dekho.",
+                drive_btn: "Open Google Drive Folder",
+                term_badge: "C COMPILER",
+                term_title: "Live C Code Simulator",
+                term_select_label: "C Code Select Karo:",
+                term_run_btn: "Run C Program",
+                edu_badge: "QUALIFICATION",
+                edu_title: "College & Certifications",
+                edu_pw_desc: "B.Tech CSE at PW Institute of Innovation. E-Cell & Content Team active member.",
+                cnt_badge: "BAAT KARO",
+                cnt_title: "Connect & Collaborate",
+                cnt_heading: "Contact Info",
+                cnt_desc: "Video editing ya web project ke liye direct message karo ya Barber Shop songs suno!",
+                form_name: "Aapka Naam",
+                form_email: "Aapki Email",
+                form_msg: "Message",
+                form_submit: "Send Message"
+            },
+            pa: {
+                nav_home: "ਹੋਮ",
+                nav_about: "ਮੇਰੇ ਬਾਰੇ",
+                nav_skills: "ਹੁਨਰ",
+                nav_projects: "ਪ੍ਰੋਜੈਕਟ",
+                nav_barber: "ਨਾਈ ਦੀ ਦੁਕਾਨ 💈",
+                nav_terminal: "C-ਟਰਮੀਨਲ",
+                nav_contact: "ਸੰਪਰਕ",
+                hero_status: "ਇੰਟਰਨਸ਼ਿਪ ਲਈ ਉਪਲਬਧ",
+                hero_greeting: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ, ਮੈਂ ਹਾਂ",
+                hero_desc: "PW ਇੰਸਟੀਚਿਊਟ ਤੋਂ B.Tech CSE ਵਿਦਿਆਰਥੀ, ਵੀਡੀਓ ਐਡੀਟਰ ਅਤੇ ਵੈੱਬ ਡਿਵੈਲਪਰ।",
+                hero_cta_work: "ਮੇਰਾ ਕੰਮ ਦੇਖੋ",
+                hero_cta_barber: "ਬਾਰਬਰ ਸ਼ੋਪ ਰੇਡੀਓ 💈",
+                chip_editor: "ਵੀਡੀਓ ਐਡੀਟਰ",
+                about_badge: "ਮੇਰਾ ਸਫ਼ਰ",
+                about_title: "ਕੋਡਿੰਗ ਅਤੇ ਵੀਡੀਓ ਸ਼ੂਟਿੰਗ",
+                about_heading_bio: "ਸਵਾਸਤਿਕ ਮਿਸ਼ਰਾ ਕੌਣ ਹੈ?",
+                about_text_1: "ਮੈਂ ਲਖਨਊ ਤੋਂ PW ਇੰਸਟੀਚਿਊਟ ਆਫ਼ ਇਨੋਵੇਸ਼ਨ ਵਿੱਚ B.Tech ਕੰਪਿਊਟਰ ਸਾਇੰਸ ਪੜ੍ਹ ਰਿਹਾ ਹਾਂ।",
+                about_text_2: "PW ਇੰਸਟੀਚਿਊਟ ਦੀ ਕੰਟੈਂਟ ਟੀਮ ਵਿੱਚ 6 ਮਹੀਨਿਆਂ ਤੋਂ ਵੱਧ ਵੀਡੀਓ ਐਡੀਟਿੰਗ ਕਰ ਰਿਹਾ ਹਾਂ।",
+                stat_exp: "ਮਹੀਨੇ ਵੀਡੀਓ ਐਡੀਟਿੰਗ",
+                stat_web: "ਵੈੱਬ ਪ੍ਰੋਜੈਕਟ",
+                stat_vibe: "ਰਚਨਾਤਮਕ ਊਰਜਾ",
+                stat_sim: "ਸਿਮੂਲੇਸ਼ਨਾਂ",
+                barber_main_title: "ਇੰਡੀਅਨ ਬਾਰਬਰ ਸ਼ੋਪ ਜੂਕਬਾਕਸ 💈",
+                barber_sub_title: "ਨਾਈ ਦੀ ਦੁਕਾਨ ਦੇ ਮਸ਼ਹੂਰ ਗਾਣੇ ਅਤੇ ਕੈਂਚੀ ਦੀਆਂ ਆਵਾਜ਼ਾਂ!",
+                fx_scissor: "✂️ ਕੈਂਚੀ ਦੀ ਆਵਾਜ਼",
+                fx_dryer: "💨 ਹੇਅਰ ਡ੍ਰਾਇਅਰ",
+                fx_massage: "💆‍♂️ ਹੈੱਡ ਮਸਾਜ ASMR",
+                skills_badge: "ਹੁਨਰ",
+                skills_title: "ਤਕਨੀਕੀ ਅਤੇ ਰਚਨਾਤਮਕ ਹੁਨਰ",
+                sk_cat_video: "ਵੀਡੀਓ ਐਡੀਟਿੰਗ",
+                sk_cat_dev: "ਵੈੱਬ ਅਤੇ C ਲੈਂਗੂਏਜ",
+                sk_cat_soft: "ਟੀਮ ਵਰਕ",
+                proj_badge: "ਪੋਰਟਫੋਲੀਓ",
+                proj_title: "ਵੈੱਬ ਅਤੇ ਵੀਡੀਓ ਪ੍ਰੋਜੈਕਟ",
+                proj_desc_netflix: "ਨੈੱਟਫਲਿਕਸ ਦਾ ਸ਼ਾਨਦਾਰ ਵੈੱਬ ਕਲੋਨ।",
+                proj_desc_amazon: "ਅਮੇਜ਼ਨ ਲੌਗਇਨ ਪੇਜ।",
+                proj_desc_yt: "ਯੂਟਿਊਬ ਹੋਮ ਪੇਜ ਰੀ-ਕ੍ਰਿਏਸ਼ਨ।",
+                proj_desc_fashion: "ਫੈਸ਼ਨ ਸਟੋਰ ਵੈੱਬਸਾਈਟ।",
+                drive_title: "ਵੀਡੀਓ ਐਡੀਟਿੰਗ ਗੂਗਲ ਡਰਾਈਵ ਦੇਖੋ",
+                drive_desc: "ਸ਼ਾਰਟ ਰੀਲਾਂ ਅਤੇ ਇਵੈਂਟ ਵੀਡੀਓ।",
+                drive_btn: "ਗੂਗਲ ਡਰਾਈਵ ਖੋਲ੍ਹੋ",
+                term_badge: "ਕੋਡਿੰਗ",
+                term_title: "C ਲੈਂਗੂਏਜ ਟਰਮੀਨਲ",
+                term_select_label: "ਪ੍ਰੋਗਰਾਮ ਚੁਣੋ:",
+                term_run_btn: "ਕੋਡ ਚਲਾਓ",
+                edu_badge: "ਸਿੱਖਿਆ",
+                edu_title: "ਪੜ੍ਹਾਈ ਅਤੇ ਸਰਟੀਫਿਕੇਟ",
+                edu_pw_desc: "B.Tech CSE at PW Institute of Innovation.",
+                cnt_badge: "ਸੰਪਰਕ",
+                cnt_title: "ਸੰਪਰਕ ਕਰੋ",
+                cnt_heading: "ਸੰਪਰਕ ਜਾਣਕਾਰੀ",
+                cnt_desc: "ਮੇਰੇ ਨਾਲ ਗੱਲਬਾਤ ਕਰਨ ਲਈ ਮੈਸੇਜ ਭੇਜੋ।",
+                form_name: "ਤੁਹਾਡਾ ਨਾਮ",
+                form_email: "ਤੁਹਾਡੀ ਈਮੇਲ",
+                form_msg: "ਸੁਨੇਹਾ",
+                form_submit: "ਸੁਨੇਹਾ ਭੇਜੋ"
+            },
+            bn: {
+                nav_home: "হোম",
+                nav_about: "আমার সম্পর্কে",
+                nav_skills: "দক্ষতা",
+                nav_projects: "প্রজেক্ট",
+                nav_barber: "সেলুন গান 💈",
+                nav_terminal: "C-টার্মিনাল",
+                nav_contact: "যোগাযোগ",
+                hero_status: "ইন্টার্নশিপের জন্য উপলব্ধ",
+                hero_greeting: "হ্যালো, আমি",
+                hero_desc: "PW ইনস্টিটিউট অফ ইনোভেশন-এ B.Tech কম্পিউটার সায়েন্সের ছাত্র। ক্রিয়েটিভ ভিডিও এডিটর ও ওয়েব ডেভেলপার।",
+                hero_cta_work: "আমার কাজ দেখুন",
+                hero_cta_barber: "বারবার শপ রেডিও 💈",
+                chip_editor: "ভিডিও এডিটর",
+                about_badge: "আমার যাত্রা",
+                about_title: "কোডিং এবং ভিজ্যুয়াল এডিটিং",
+                about_heading_bio: "স্বস্তিক মিশ্র কে?",
+                about_text_1: "আমি লখনউয়ের PW ইনস্টিটিউট অফ ইনোভেশনে B.Tech CSE পড়ছি।",
+                about_text_2: "PW ইনস্টিটিউটের কনটেন্ট ক্রিয়েশন টিমে ৬ মাসের বেশি সময় ধরে ভিডিও এডিটিং করছি।",
+                stat_exp: "মাস ভিডিও এডিটিং",
+                stat_web: "ওয়েব ক্লোন",
+                stat_vibe: "সৃজনশীলতা",
+                stat_sim: "সিমুলেশন",
+                barber_main_title: "ইন্ডিয়ান বারবার শপ জুকবক্স 💈",
+                barber_sub_title: "নাপিতের দোকানের সেরা গান এবং কাঁচির শব্দ!",
+                fx_scissor: "✂️ কাঁচির শব্দ",
+                fx_dryer: "💨 হেয়ার ড্রায়ার",
+                fx_massage: "💆‍♂️ হেড মাসাজ ASMR",
+                skills_badge: "দক্ষতা",
+                skills_title: "ক্রিয়েটিভ ও টেকনিক্যাল স্কিল",
+                sk_cat_video: "ভিডিও এডিটিং",
+                sk_cat_dev: "ওয়েব ও সি প্রোগ্রামিং",
+                sk_cat_soft: "টিম ওয়ার্ক",
+                proj_badge: "পোর্টফোলিও",
+                proj_title: "ওয়েব প্রজেক্ট ও এডিটিং রিল",
+                proj_desc_netflix: "নেটফ্লিক্স ল্যান্ডিং পেজ ক্লোন।",
+                proj_desc_amazon: "আমাজন লগইন পেজ।",
+                proj_desc_yt: "ইউটিউব হোম পেজ ডিজাইন।",
+                proj_desc_fashion: "ফ্যাশন স্টোর ল্যান্ডিং পেজ।",
+                drive_title: "ভিডিও এডিটিং ড্রাইভ ফোল্ডার খুলুন",
+                drive_desc: "শর্ট রিলস, ইভেন্ট ভিডিও এবং পোস্টার।",
+                drive_btn: "ড্রাইভ ফোল্ডার খুলুন",
+                term_badge: "কোডিং",
+                term_title: "C প্রোগ্রামিং রানার",
+                term_select_label: "প্রোগ্রাম নির্বাচন করুন:",
+                term_run_btn: "কোড চালান",
+                edu_badge: "শিক্ষা",
+                edu_title: "শিক্ষাগত যোগ্যতা",
+                edu_pw_desc: "PW ইনস্টিটিউট অফ ইনোভেশনে B.Tech CSE।",
+                cnt_badge: "যোগাযোগ",
+                cnt_title: "কথা বলুন",
+                cnt_heading: "যোগাযোগের তথ্য",
+                cnt_desc: "ভিডিও এডিটিং বা ওয়েব কাজের জন্য মেসেজ পাঠান।",
+                form_name: "আপনার নাম",
+                form_email: "আপনার ইমেল",
+                form_msg: "বার্তা",
+                form_submit: "বার্তা পাঠান"
+            },
+            es: {
+                nav_home: "Inicio",
+                nav_about: "Sobre mí",
+                nav_skills: "Habilidades",
+                nav_projects: "Proyectos",
+                nav_barber: "Barbería 💈",
+                nav_terminal: "Terminal C",
+                nav_contact: "Contacto",
+                hero_status: "Disponible para Pasantías",
+                hero_greeting: "Hola, soy",
+                hero_desc: "Estudiante de Grado en Ingeniería Informática en PW Institute of Innovation. Editor de Video Creativo y Desarrollador Web.",
+                hero_cta_work: "Ver Mi Trabajo",
+                hero_cta_barber: "Radio Barbería 💈",
+                chip_editor: "Editor de Video",
+                about_badge: "MI TRAYECTORIA",
+                about_title: "Impulsado por el Código y la Narrativa Visual",
+                about_heading_bio: "¿Quién es Swastik Mishra?",
+                about_text_1: "Soy estudiante de B.Tech CSE en PW Institute of Innovation (2025–2029) en Lucknow, India.",
+                about_text_2: "Miembro del equipo de creación de contenido durante más de 6 meses creando reels y cinematografía.",
+                stat_exp: "Meses Editando Video",
+                stat_web: "Clones de Páginas Web",
+                stat_vibe: "Entusiasmo Creativo",
+                stat_sim: "Simulaciones Corporativas",
+                barber_main_title: "JUKEBOX DE BARBERÍA INDIA 💈",
+                barber_sub_title: "Canciones retro de barbería india de los 90 y 2000 y efectos de sonido.",
+                fx_scissor: "✂️ Corte de Tijera",
+                fx_dryer: "💨 Secador de Pelo",
+                fx_massage: "💆‍♂️ Masaje Capilar ASMR",
+                skills_badge: "TALENTO",
+                skills_title: "Experiencia Creativa y Técnica",
+                sk_cat_video: "Edición de Video y Medios",
+                sk_cat_dev: "Desarrollo Web y C",
+                sk_cat_soft: "Fortalezas Principales",
+                proj_badge: "PORTAFOLIO",
+                proj_title: "Proyectos Web y Edición",
+                proj_desc_netflix: "Clon elegante de la página de inicio de Netflix.",
+                proj_desc_amazon: "Réplica de la interfaz de inicio de sesión de Amazon.",
+                proj_desc_yt: "Diseño completo de la página principal de YouTube.",
+                proj_desc_fashion: "Página de inicio para tienda de moda.",
+                drive_title: "Explorar la Carpeta de Google Drive de Swastik",
+                drive_desc: "Incluye reels cortos, cobertura de eventos y cinematografía.",
+                drive_btn: "Abrir Google Drive",
+                term_badge: "CÓDIGO INTERACTIVO",
+                term_title: "Ejecutor de Código C",
+                term_select_label: "Seleccionar Programa C:",
+                term_run_btn: "Ejecutar Código C",
+                edu_badge: "EDUCACIÓN",
+                edu_title: "Educación y Certificaciones",
+                edu_pw_desc: "Educación en ingeniería informática y creación de contenido.",
+                cnt_badge: "CONTACTO",
+                cnt_title: "Conectemos y Colaboremos",
+                cnt_heading: "Información de Contacto",
+                cnt_desc: "¿Tienes un proyecto de edición de video o desarrollo web? ¡Contáctame!",
+                form_name: "Tu Nombre",
+                form_email: "Tu Correo",
+                form_msg: "Mensaje",
+                form_submit: "Enviar Mensaje"
+            },
+            fr: {
+                nav_home: "Accueil",
+                nav_about: "À propos",
+                nav_skills: "Compétences",
+                nav_projects: "Projets",
+                nav_barber: "Salon Coiffure 💈",
+                nav_terminal: "Terminal C",
+                nav_contact: "Contact",
+                hero_status: "Disponible pour Stages",
+                hero_greeting: "Bonjour, je suis",
+                hero_desc: "Étudiant en B.Tech Informatique à PW Institute of Innovation. Monteur Vidéo Créatif et Développeur Web.",
+                hero_cta_work: "Voir Mes Projets",
+                hero_cta_barber: "Radio Coiffure 💈",
+                chip_editor: "Monteur Vidéo",
+                about_badge: "MON PARCOURS",
+                about_title: "Code et Visual Storytelling",
+                about_heading_bio: "Qui est Swastik Mishra?",
+                about_text_1: "Étudiant en B.Tech CSE à PW Institute of Innovation à Lucknow, Inde.",
+                about_text_2: "Membre de l'équipe de création de contenu depuis plus de 6 mois pour la réalisation de vidéos et reels.",
+                stat_exp: "Mois d'Édition Vidéo",
+                stat_web: "Clones de Sites Web",
+                stat_vibe: "Enthousiasme Créatif",
+                stat_sim: "Simulations Entreprise",
+                barber_main_title: "JUKEBOX SALON DE COIFFURE INDIEN 💈",
+                barber_sub_title: "Musiques rétro de salon de coiffure indien des années 90/2000 & effets sonores!",
+                fx_scissor: "✂️ Bruit de Ciseaux",
+                fx_dryer: "💨 Sèche-cheveux",
+                fx_massage: "💆‍♂️ Massage Cramien ASMR",
+                skills_badge: "COMPÉTENCES",
+                skills_title: "Expertise Technique et Créative",
+                sk_cat_video: "Montage Vidéo & Médias",
+                sk_cat_dev: "Développement Web & C",
+                sk_cat_soft: "Forces Principales",
+                proj_badge: "PORTFOLIO",
+                proj_title: "Projets Web & Montage Vidéo",
+                proj_desc_netflix: "Clone élégant de la page d'accueil Netflix.",
+                proj_desc_amazon: "Réplique de la page d'authentification Amazon.",
+                proj_desc_yt: "Interface desktop complète de la page d'accueil YouTube.",
+                proj_desc_fashion: "Page d'accueil e-commerce pour magasin de mode.",
+                drive_title: "Explorer le Dossier Google Drive de Swastik",
+                drive_desc: "Reels courts, couverture d'événements et projets cinématographiques.",
+                drive_btn: "Ouvrir Google Drive",
+                term_badge: "CODE INTERACTIF",
+                term_title: "Exécuteur de Code C",
+                term_select_label: "Choisir un Programme C:",
+                term_run_btn: "Lancer le Code C",
+                edu_badge: "ÉDUCATION",
+                edu_title: "Parcours Scolaire et Certificats",
+                edu_pw_desc: "Formation en informatique et engagement dans l'équipe vidéo.",
+                cnt_badge: "CONTACT",
+                cnt_title: "Travaillons Ensemble",
+                cnt_heading: "Informations de Contact",
+                cnt_desc: "Pour un projet de montage vidéo ou de développement web, contactez-moi!",
+                form_name: "Votre Nom",
+                form_email: "Votre Email",
+                form_msg: "Message",
+                form_submit: "Envoyer le Message"
+            },
+            ja: {
+                nav_home: "ホーム",
+                nav_about: "私について",
+                nav_skills: "スキル",
+                nav_projects: "実績",
+                nav_barber: "床屋ジュークボックス 💈",
+                nav_terminal: "C言語端末",
+                nav_contact: "お問い合わせ",
+                hero_status: "インターンシップ募集中",
+                hero_greeting: "こんにちは、",
+                hero_desc: "PW Institute of InnovationのB.Techコンピュータサイエンス学生。クリエイティブ動画編集者＆Webエンジニア。",
+                hero_cta_work: "作品を見る",
+                hero_cta_barber: "床屋ラジオ 💈",
+                chip_editor: "動画編集者",
+                about_badge: "経歴",
+                about_title: "コードとビジュアルストーリーテリング",
+                about_heading_bio: "Swastik Mishra（スワスティク・ミシュラ）とは？",
+                about_text_1: "インド・ラクナウ出身のPW Institute of Innovation B.Tech CSE学生です。",
+                about_text_2: "PW Instituteのコンテンツ制作チームで6ヶ月以上動画編集やイベント撮影を担当。",
+                stat_exp: "ヶ月の動画編集経験",
+                stat_web: "Webクローン作品",
+                stat_vibe: "クリエイティブ情熱",
+                stat_sim: "企業シミュレーション",
+                barber_main_title: "インド風バーバーショップ・ジュークボックス 💈",
+                barber_sub_title: "90年代・2000年代の懐かしいインド床屋ソング＆ハサミのASMRサウンド！",
+                fx_scissor: "✂️ ハサミの音",
+                fx_dryer: "💨 ドライヤー",
+                fx_massage: "💆‍♂️ ヘッドマッサージASMR",
+                skills_badge: "スキル",
+                skills_title: "クリエイティブ＆技術力",
+                sk_cat_video: "動画編集・メディア",
+                sk_cat_dev: "Web開発・C言語",
+                sk_cat_soft: "チームワーク力",
+                proj_badge: "ポートフォリオ",
+                proj_title: "Webプロジェクト＆動画作品",
+                proj_desc_netflix: "Netflixトップページのレスポンシブクローン。",
+                proj_desc_amazon: "Amazonログイン画面再現プロジェクト。",
+                proj_desc_yt: "YouTubeデスクトップ版トップページの完全再現。",
+                proj_desc_fashion: "ファッションストアのランディングページ。",
+                drive_title: "SwastikのGoogle Drive動画作品集を見る",
+                drive_desc: "ショートリール、PW Instituteのイベント動画、撮影編集作品。",
+                drive_btn: "Google Driveを開く",
+                term_badge: "コード実行環境",
+                term_title: "C言語実行シミュレーター",
+                term_select_label: "C言語プログラム選択:",
+                term_run_btn: "Cコードを実行",
+                edu_badge: "学歴",
+                edu_title: "学歴＆認定シミュレーション",
+                edu_pw_desc: "PW Institute of InnovationでのCSE専攻および動画制作チーム活動。",
+                cnt_badge: "コンタクト",
+                cnt_title: "お問い合わせ・コラボレーション",
+                cnt_heading: "連絡先情報",
+                cnt_desc: "動画編集、Web開発のご依頼、床屋ソングのリクエストはこちらから！",
+                form_name: "お名前",
+                form_email: "メールアドレス",
+                form_msg: "メッセージ",
+                form_submit: "送信する"
+            }
+        };
+
+        // Current Language State
+        let currentLang = 'en';
+
+        // Language Selector Elements
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        const currentLangText = document.getElementById('currentLangText');
+        const langOpts = document.querySelectorAll('.lang-opt');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            langDropdown.classList.remove('show');
+        });
+
+        langOpts.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const selectedLang = opt.getAttribute('data-lang');
+                setLanguage(selectedLang);
+                langDropdown.classList.remove('show');
+            });
+        });
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+
+            // Update Header Text
+            const langNames = {
+                en: "English",
+                hi: "हिंदी",
+                hinglish: "Hinglish",
+                pa: "ਪੰਜਾਬੀ",
+                bn: "বাংলা",
+                es: "Español",
+                fr: "Français",
+                ja: "日本語"
+            };
+            currentLangText.textContent = langNames[lang] || lang.toUpperCase();
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Re-trigger typing animation with language-specific items
+            startTypingEffect();
+        }
+
+        /* ==================== TYPING EFFECT ==================== */
+        const typingText = document.getElementById('typingText');
+        let typeIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function getTypingPhrases() {
+            if (currentLang === 'hi') {
+                return ["वेब डेवलपर 🚀", "क्रिएटिव वीडियो एडिटर ✂️", "सिनेमैटोग्राफर 🎥", "PW इंस्टीट्यूट छात्र 💻"];
+            } else if (currentLang === 'hinglish') {
+                return ["Aspiring Web Developer 🚀", "Creative Video Editor ✂️", "Cinematographer 🎥", "PW Institute CSE Student 💻"];
+            } else if (currentLang === 'ja') {
+                return ["Webエンジニア 🚀", "動画編集クリエイター ✂️", "シネマトグラファー 🎥", "PW CSE学生 💻"];
+            } else {
+                return ["Aspiring Web Developer 🚀", "Creative Video Editor ✂️", "Cinematographer & Storyteller 🎥", "PW Institute CSE Student 💻"];
+            }
+        }
+
+        function typeLoop() {
+            const phrases = getTypingPhrases();
+            const currentPhrase = phrases[typeIndex % phrases.length];
+
+            if (isDeleting) {
+                typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                typeIndex++;
+                typeSpeed = 400;
+            }
+
+            setTimeout(typeLoop, typeSpeed);
+        }
+
+        function startTypingEffect() {
+            charIndex = 0;
+            isDeleting = false;
+        }
+
+        typeLoop();
+
+        /* ==================== BARBER SHOP JUKEBOX PLAYLIST & PLAYER ==================== */
+        const playlist = [
+            {
+                id: 1,
+                title: "Ghar Se Nikalte Hi - Retro Salon Special",
+                singer: "Udit Narayan • 90s Classic",
+                art: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=300&q=80",
+                duration: "3:45",
+                tag: "90s Barber Hit",
+                // High reliability synthesized fallback + audio stream
+                url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
+            },
+            {
+                id: 2,
+                title: "Ek Ladki Ko Dekha Toh Aisa Laga",
+                singer: "Kumar Sanu • Romantic Hair Salon Vibe",
+                art: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=300&q=80",
+                duration: "4:12",
+                tag: "FM 98.3 Nostalgia",
+                url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=chill-lofi-song-8444.mp3"
+            },
+            {
+                id: 3,
+                title: "Kaho Naa Pyaar Hai - Barber Chair Mix",
+                singer: "Udit Narayan & Alka Yagnik",
+                art: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=300&q=80",
+                duration: "3:30",
+                tag: "2000s Superhit",
+                url: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-lofi-14002.mp3"
+            },
+            {
+                id: 4,
+                title: "Pardesi Pardesi Jaana Nahi",
+                singer: "Alka Yagnik & Udit Narayan",
+                art: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=300&q=80",
+                duration: "4:50",
+                tag: "Lucknow Barber Lounge",
+                url: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_94b4700c0f.mp3?filename=relaxing-chill-out-10555.mp3"
+            },
+            {
+                id: 5,
+                title: "Daler Mehndi Barber Groove Beats",
+                singer: "Bhangra Haircut Salon Beats",
+                art: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=300&q=80",
+                duration: "3:15",
+                tag: "Punjabi Haircut Groove",
+                url: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f60410.mp3?filename=upbeat-energetic-125023.mp3"
+            }
+        ];
+
+        let currentTrackIdx = 0;
+        let isPlaying = false;
+        const audio = new Audio();
+        audio.crossOrigin = "anonymous";
+
+        // Player UI Elements
+        const playlistContainer = document.getElementById('playlistContainer');
+        const vinylDisc = document.getElementById('vinylDisc');
+        const currentTrackArt = document.getElementById('currentTrackArt');
+        const currentTrackTitle = document.getElementById('currentTrackTitle');
+        const currentTrackSinger = document.getElementById('currentTrackSinger');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevTrackBtn = document.getElementById('prevTrackBtn');
+        const nextTrackBtn = document.getElementById('nextTrackBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+
+        // Render Playlist Cards
+        function renderPlaylist() {
+            playlistContainer.innerHTML = '';
+            playlist.forEach((song, idx) => {
+                const card = document.createElement('div');
+                card.className = `song-card ${idx === currentTrackIdx ? 'active' : ''}`;
+                card.innerHTML = `
+                    <div class="song-left">
+                        <img src="${song.art}" class="song-thumb" alt="${song.title}">
+                        <div class="song-details">
+                            <h5>${song.title}</h5>
+                            <p>${song.singer}</p>
+                        </div>
+                    </div>
+                    <span class="song-tag">${song.tag}</span>
+                `;
+                card.addEventListener('click', () => {
+                    loadTrack(idx);
+                    playAudio();
+                });
+                playlistContainer.appendChild(card);
+            });
+        }
+
+        function loadTrack(idx) {
+            currentTrackIdx = idx;
+            const song = playlist[idx];
+            audio.src = song.url;
+            currentTrackArt.src = song.art;
+            currentTrackTitle.textContent = song.title;
+            currentTrackSinger.textContent = song.singer;
+            durationEl.textContent = song.duration;
+            renderPlaylist();
+        }
+
+        function playAudio() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                vinylDisc.classList.add('playing');
+                startVisualizerAnimation();
+            }).catch(e => {
+                console.log("Audio play prevented or offline fallback", e);
+                // Web Audio API synth fallback if external URL fails
+                playSynthTone();
+            });
+        }
+
+        function pauseAudio() {
+            audio.pause();
+            isPlaying = false;
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            vinylDisc.classList.remove('playing');
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        });
+
+        prevTrackBtn.addEventListener('click', () => {
+            currentTrackIdx = (currentTrackIdx - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIdx);
+            playAudio();
+        });
+
+        nextTrackBtn.addEventListener('click', () => {
+            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
+            loadTrack(currentTrackIdx);
+            playAudio();
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = `${percent}%`;
+
+                const curMins = Math.floor(audio.currentTime / 60);
+                const curSecs = Math.floor(audio.currentTime % 60);
+                currentTimeEl.textContent = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs}`;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            nextTrackBtn.click();
+        });
+
+        progressBar.addEventListener('click', (e) => {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            if (audio.duration) {
+                audio.currentTime = (clickX / width) * audio.duration;
+            }
+        });
+
+        // Initialize playlist
+        loadTrack(0);
+
+        /* ==================== WEB AUDIO API BARBER ASMR SOUND BOARD ==================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        // ✂️ Scissor Snip Sound Synth
+        document.getElementById('fxScissor').addEventListener('click', () => {
+            playScissorSnip();
+            showToast("✂️ Scissor Snip Sound Triggered!");
+        });
+
+        function playScissorSnip() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            // Metallic click & snip frequency burst
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(3500, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.06);
+
+            // Double snip effect
+            setTimeout(() => {
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(4200, audioCtx.currentTime);
+                osc2.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.04);
+                gain2.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start();
+                osc2.stop(audioCtx.currentTime + 0.05);
+            }, 80);
+        }
+
+        // 💨 Hair Dryer Sound Synth
+        document.getElementById('fxDryer').addEventListener('click', () => {
+            playHairDryerNoise();
+            showToast("💨 Hair Dryer Wind ASMR Active!");
+        });
+
+        function playHairDryerNoise() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const bufferSize = audioCtx.sampleRate * 0.8;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+
+            const whiteNoise = audioCtx.createBufferSource();
+            whiteNoise.buffer = buffer;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+            filter.Q.setValueAtTime(1.5, audioCtx.currentTime);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+
+            whiteNoise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            whiteNoise.start();
+        }
+
+        // 💆‍♂️ Head Massage ASMR Sound
+        document.getElementById('fxMassage').addEventListener('click', () => {
+            playMassageTone();
+            showToast("💆‍♂️ Relaxing Barber Head Massage Tones!");
+        });
+
+        function playMassageTone() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(160, audioCtx.currentTime + 0.5);
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.2);
+        }
+
+        function playSynthTone() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            vinylDisc.classList.add('playing');
+            showToast("🎶 Playing Indian Barber Retro Synth Melody!");
+            startVisualizerAnimation();
+        }
+
+        /* ==================== CANVAS AUDIO EQUALIZER VISUALIZER ==================== */
+        const canvas = document.getElementById('visualizerCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth - 60;
+            canvas.height = 60;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        let animFrame;
+        function startVisualizerAnimation() {
+            cancelAnimationFrame(animFrame);
+            function drawBars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const numBars = 32;
+                const barWidth = (canvas.width / numBars) - 4;
+
+                for (let i = 0; i < numBars; i++) {
+                    const barHeight = isPlaying ? Math.random() * (canvas.height - 10) + 5 : 4;
+                    const x = i * (barWidth + 4);
+                    const y = canvas.height - barHeight;
+
+                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                    gradient.addColorStop(0, '#ef4444');
+                    gradient.addColorStop(1, '#3b82f6');
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x, y, barWidth, barHeight);
+                }
+
+                if (isPlaying) {
+                    animFrame = requestAnimationFrame(drawBars);
+                }
+            }
+            drawBars();
+        }
+
+        /* ==================== C PROGRAM TERMINAL SANDBOX ==================== */
+        const cSnippets = {
+            avg: {
+                code: `// C Program: Calculate Average of Numbers\n#include <stdio.h>\n\nint main() {\n    int n = 5;\n    float numbers[5] = {85.5, 90.0, 78.5, 92.0, 88.0};\n    float sum = 0.0, average;\n\n    for(int i = 0; i < n; i++) {\n        sum += numbers[i];\n    }\n    average = sum / n;\n    printf("Total Sum = %.2f\\n", sum);\n    printf("Calculated Average = %.2f\\n", average);\n    return 0;\n}`,
+                output: `Compiling main.c with gcc...\nExecution Started:\n-----------------------------------\nTotal Sum = 434.00\nCalculated Average = 86.80\n\nProcess finished with exit code 0`
+            },
+            ifelse: {
+                code: `// C Program: Nested IF-ELSE Grade & Pass Check\n#include <stdio.h>\n\nint main() {\n    int marks = 92;\n    printf("Student Marks: %d\\n", marks);\n\n    if (marks >= 40) {\n        printf("Status: PASSED\\n");\n        if (marks >= 90) {\n            printf("Grade: A+ (Outstanding)\\n");\n        } else if (marks >= 75) {\n            printf("Grade: A (Distinction)\\n");\n        } else {\n            printf("Grade: B\\n");\n        }\n    } else {\n        printf("Status: FAILED\\n");\n    }\n    return 0;\n}`,
+                output: `Compiling main.c with gcc...\nExecution Started:\n-----------------------------------\nStudent Marks: 92\nStatus: PASSED\nGrade: A+ (Outstanding)\n\nProcess finished with exit code 0`
+            },
+            pattern: {
+                code: `// C Program: Right Angle Star Pattern\n#include <stdio.h>\n\nint main() {\n    int rows = 5;\n    for(int i = 1; i <= rows; i++) {\n        for(int j = 1; j <= i; j++) {\n            printf("* ");\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+                output: `Compiling main.c with gcc...\nExecution Started:\n-----------------------------------\n* \n* * \n* * * \n* * * * \n* * * * * \n\nProcess finished with exit code 0`
+            }
+        };
+
+        const codeSnippetSelect = document.getElementById('codeSnippetSelect');
+        const codePreviewText = document.getElementById('codePreviewText');
+        const runCodeBtn = document.getElementById('runCodeBtn');
+        const terminalStdout = document.getElementById('terminalStdout');
+
+        function loadCodeSnippet(key) {
+            codePreviewText.textContent = cSnippets[key].code;
+            terminalStdout.textContent = `Selected: ${key.toUpperCase()} program. Click "Run C Code" to execute.`;
+        }
+
+        codeSnippetSelect.addEventListener('change', (e) => {
+            loadCodeSnippet(e.target.value);
+        });
+
+        runCodeBtn.addEventListener('click', () => {
+            const key = codeSnippetSelect.value;
+            terminalStdout.textContent = "Compiling C code with gcc...\nExecuting binary...";
+            setTimeout(() => {
+                terminalStdout.textContent = cSnippets[key].output;
+            }, 600);
+        });
+
+        // Initialize default snippet
+        loadCodeSnippet('avg');
+
+        /* ==================== THEME TOGGLE ==================== */
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        });
+
+        /* ==================== TOAST & CONTACT FORM ==================== */
+        const toast = document.getElementById('toastNotification');
+        const toastMessage = document.getElementById('toastMessage');
+
+        function showToast(msg) {
+            toastMessage.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        document.getElementById('copyEmailBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText('realswastik.op@gmail.com');
+            showToast("Copied 'realswastik.op@gmail.com' to clipboard!");
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast("Message sent successfully! Swastik will respond soon.");
+            e.target.reset();
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('navMenu').classList.toggle('show');
+        });
+
+        // Dynamic Year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
